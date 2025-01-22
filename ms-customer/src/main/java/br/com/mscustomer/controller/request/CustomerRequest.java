@@ -9,6 +9,6 @@ public record CustomerRequest(String firstName,
                               String sex,
                               String birthdate,
                               String email,
-                              String password,//receber criptografado
+                              String password,//ñ vem cifrado, criptografar posteriormente
                               boolean  active){
 }
