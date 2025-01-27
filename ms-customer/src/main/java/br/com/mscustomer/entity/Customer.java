@@ -4,22 +4,22 @@ package br.com.mscustomer.entity;
 import br.com.mscustomer.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "CUSTOMER",schema = "SHOP_STYLE")
+@Table(name = "CUSTOMER",schema = "MS_CUSTOMER_SCH")
+@Entity
 public class Customer {
 
-    @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
 
     @Column(name="CPF",nullable=false,unique=true,length=11)
@@ -34,8 +34,11 @@ public class Customer {
     @Column(name="SEX",nullable = false,length = 10)
     private Gender gender;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Column(name="BIRTHDATE",nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime birthdate;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Address> addresses;
 
 }

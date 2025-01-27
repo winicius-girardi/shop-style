@@ -1,8 +1,10 @@
 package br.com.mscustomer.utils;
 
+import br.com.mscustomer.controller.request.AddressRequest;
 import br.com.mscustomer.controller.request.CustomerRequest;
 import br.com.mscustomer.controller.response.ErrorField;
 import br.com.mscustomer.enums.Gender;
+import br.com.mscustomer.enums.State;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +35,43 @@ public class ValidatorUtils{
         if(!customer.birthdate().matches("^\\d{4}-\\d{2}-\\d{2}$"))
             errors.add(createErrorField("BIRTHDATE","DATA DE NASCIMENTO PRECISA ESTAR NO FORMATO 'ANO-MES-DIA'."));
 
+        return errors;
+
+    }
+
+    public  static List<ErrorField> addressValidation(AddressRequest address){
+
+        List<ErrorField> errors = new ArrayList<>();
+
+        if(!address.cep().matches("^\\d{5}-\\d{3}$"))
+            errors.add(createErrorField("ADDRESS","CEP PRECISA SER NO FORMATO XXXXX-XXX"));
+
+        if(address.city().isBlank())
+            errors.add(createErrorField("CITY","CIDADE PRECISA SER INFORMADA"));
+
+        if(address.state().isBlank())
+            errors.add(createErrorField("STATE","ESTADO PRECISA SER INFOMARDO"));
+
+        if(address.number().matches("^\\d$"))
+            errors.add(createErrorField("NUMBER","CAMPO NUMERO SÓ PODE CONTER NUMEROS"));
+
+        if(address.customerId().describeConstable().isEmpty())
+            errors.add(createErrorField("CUSTOMERID","CUSTOMERID PRECISA SER INFORMADO"));
+
+        if(address.district().isBlank())
+            errors.add(createErrorField("DISTRICT","DISTRITO PRECISA SER INFORMADO"));
+
+        if(address.street().isBlank())
+            errors.add(createErrorField("STREET","RUA PRECISA SER INFORMADA"));
+
+        try{
+            State.valueOf(address.state());
+        }catch(Exception e){
+            errors.add(createErrorField("STATE","ESTADO INFORMADO É INVÁLIDO"));
+        }
 
 
-            return errors;
-
+        return errors;
     }
 
 }

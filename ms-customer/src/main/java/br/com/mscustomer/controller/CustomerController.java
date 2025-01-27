@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class CustomerController {
 
-    private final AddressService addressService;
     private final CustomerService customerService;
 
     @PostMapping("/v1/login")
@@ -38,24 +37,6 @@ public class CustomerController {
     public ResponseEntity<?> updateCustomerPassword(@PathVariable Long id){
         return customerService.updateCustomerPassword();
     }
-
-    @PostMapping("/v1/address}")
-    public ResponseEntity<?> createAddress(){
-        return addressService.createAddress();
-    }
-
-    @PutMapping("/v1/address/{id}")
-    public ResponseEntity<?> updateAddress(@PathVariable Long id) {
-        return addressService.updateAddress();
-    }
-
-    @DeleteMapping("/v1/address/{id}")
-    public ResponseEntity<?> deleteAddress(@PathVariable Long id) {
-        return addressService.deleteAddress();
-    }
-
-
-
 
 
 

@@ -1,0 +1,17 @@
+services:
+  db:
+    container_name: db_customer_ms
+    image: postgres:17.2-alpine
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db.sql:/docker-entrypoint-initdb.d/db.sql
+
+
+
+#cli -> psql -U <user> -H <db_name>
+#abrir cli -> docker exec -it <container-name> sh
