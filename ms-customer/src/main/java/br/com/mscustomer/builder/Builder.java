@@ -10,8 +10,7 @@ import br.com.mscustomer.enums.Gender;
 import br.com.mscustomer.enums.State;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 public class Builder {
 
@@ -25,11 +24,25 @@ public class Builder {
 
     public static Customer toCustomerEntity(CustomerRequest customerRequest){
         return Customer.builder()
-                .cpf(customerRequest.cpf())
+                .cpf(customerRequest.cpf().replace(".","").replace("-",""))
                 .firstName(customerRequest.firstName())
                 .lastName(customerRequest.lastName())
                 .gender(createGender(customerRequest.sex()))
                 .birthdate(formatBirthDate(customerRequest.birthdate()))
+                .build();
+    }
+
+    public static Address toAddressEntity(AddressRequest addressRequest){
+        return Address.builder()
+                .city(addressRequest.city())
+                .cep(addressRequest.cep().replace("-",""))
+                .complement(addressRequest.complement())
+                .district(addressRequest.district())
+                .number(addressRequest.number())
+                .street(addressRequest.street())
+                .state(State.valueOf(addressRequest.state()))
+                .customerId(addressRequest.customerId())
+                .state(State.valueOf(addressRequest.state()))
                 .build();
     }
 
@@ -39,16 +52,6 @@ public class Builder {
                 .build();
     }
 
-    public static Address createAddress(AddressRequest request){
-        return Address.builder()
-                .city(request.city())
-                .street(request.street())
-                .state(State.valueOf(request.state()))
-
-                .build();
-    }
-
-
     public static Gender createGender(String gender){
         try{
             return Gender.valueOf(gender);
@@ -57,10 +60,9 @@ public class Builder {
         }
     }
 
-    private static LocalDateTime formatBirthDate(String date){
-        LocalDate localDate = LocalDate.parse(date);
-        LocalDateTime localDateTime = localDate.atStartOfDay();
-        return localDateTime.atOffset(ZoneOffset.UTC).toLocalDateTime();
+    private static LocalDate formatBirthDate(String date){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(date, formatter) ;
     }
 
 }

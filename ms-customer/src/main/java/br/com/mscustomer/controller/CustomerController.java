@@ -18,7 +18,7 @@ public class CustomerController {
         return null;
     }
 
-    @PostMapping("/v1/customers")
+    @PostMapping("/v1/customer")
     public ResponseEntity<?> createCustomer(@RequestBody CustomerRequest request){
         return customerService.createCustomer(request);
     }

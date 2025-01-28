@@ -17,7 +17,7 @@ public class ValidatorUtils{
 
         List<ErrorField> errors = new ArrayList<>();
 
-        if(customer.cpf().length()!=11||customer.cpf().matches("[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{3}"))
+        if(!customer.cpf().matches("[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}"))
             errors.add(createErrorField("CPF","CPF INFORMADO NÃO ESTÁ NO FORMATO XXX.XXX.XXX-XX"));
 
         if(customer.firstName().replace(" ","").length()<3||customer.firstName().contains("[0-9]"))
@@ -26,7 +26,7 @@ public class ValidatorUtils{
         if(customer.lastName().replace(" ","").length()<3||customer.lastName().contains("[0-9]"))
             errors.add(createErrorField("LASTNAME","SOBRENOME INFORADO DEVE TER PELO MENOS 3 CARACTERES VÁLIDOS"));
 
-        if(!customer.email().matches("^[\\\\w._%+-]+@[\\\\w.-]+\\\\.[a-zA-Z]{2,}$"))
+        if(!customer.email().matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$"))
             errors.add(createErrorField("EMAIL","EMAIL INFORADO DEVE TER FORMATO VÁLIDO"));
 
         if(customer.password().replace(" ","").length()<6)

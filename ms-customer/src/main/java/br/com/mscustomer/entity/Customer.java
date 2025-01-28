@@ -1,12 +1,10 @@
 package br.com.mscustomer.entity;
 
-
 import br.com.mscustomer.enums.Gender;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
 
 @Builder
 @Setter
@@ -35,10 +33,6 @@ public class Customer {
     private Gender gender;
 
     @Column(name="BIRTHDATE",nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime birthdate;
-
-    @OneToMany(mappedBy = "customer")
-    private List<Address> addresses;
+    private LocalDate birthdate;
 
 }
