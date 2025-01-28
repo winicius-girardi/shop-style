@@ -35,4 +35,12 @@ public class Customer {
     @Column(name="BIRTHDATE",nullable = false)
     private LocalDate birthdate;
 
+    @Column(name = "EMAIL",nullable = false)
+    private String email;
+
+    @Column(name = "PASSWORD",nullable = false)
+    private String password;
+
+    @Column(name = "ACTIVE",nullable = false)
+    private boolean active;
 }

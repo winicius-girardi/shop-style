@@ -8,6 +8,7 @@ import br.com.mscustomer.entity.Address;
 import br.com.mscustomer.entity.Customer;
 import br.com.mscustomer.enums.Gender;
 import br.com.mscustomer.enums.State;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -29,6 +30,9 @@ public class Builder {
                 .lastName(customerRequest.lastName())
                 .gender(createGender(customerRequest.sex()))
                 .birthdate(formatBirthDate(customerRequest.birthdate()))
+                .active(customerRequest.active())
+                .email(customerRequest.email())
+                .password(cipherPassword(customerRequest.password()))
                 .build();
     }
 
@@ -64,5 +68,11 @@ public class Builder {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(date, formatter) ;
     }
+
+    public static String cipherPassword(String password){
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.encode(password);
+    }
+
 
 }
