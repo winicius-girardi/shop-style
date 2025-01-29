@@ -42,6 +42,4 @@ public class Address {
     @Column(name = "CUSTOMER_ID",nullable = false)
     private Long  customerId;
 
-
-
 }

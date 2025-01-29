@@ -1,4 +1,4 @@
-package br.com.mscustomer.controller.response;
+package br.com.mscustomer.exception.response;
 
 import lombok.Builder;
 

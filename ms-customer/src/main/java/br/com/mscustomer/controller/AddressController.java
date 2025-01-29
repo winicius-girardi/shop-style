@@ -1,6 +1,7 @@
 package br.com.mscustomer.controller;
 
-import br.com.mscustomer.controller.request.AddressRequest;
+import br.com.mscustomer.controller.request.AddressCreateRequest;
+import br.com.mscustomer.controller.request.AddressUpdateRequest;
 import br.com.mscustomer.service.AddressService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,18 +14,18 @@ public class AddressController {
     private final AddressService addressService;
 
     @PostMapping("/v1/address")
-    public ResponseEntity<?> createAddress(@RequestBody AddressRequest request){
+    public ResponseEntity<Void> createAddress(@RequestBody final AddressCreateRequest request){
         return addressService.createAddress(request);
     }
 
     @PutMapping("/v1/address/{id}")
-    public ResponseEntity<?> updateAddress(@PathVariable Long id) {
-        return addressService.updateAddress();
+    public ResponseEntity<Void> updateAddress(@PathVariable final Long id,@RequestBody final AddressUpdateRequest request) {
+        return addressService.updateAddress(id,request);
     }
 
     @DeleteMapping("/v1/address/{id}")
-    public ResponseEntity<?> deleteAddress(@PathVariable Long id) {
-        return addressService.deleteAddress();
+    public ResponseEntity<Void> deleteAddress(@PathVariable final Long id) {
+        return addressService.deleteAddress(id);
     }
 
 }

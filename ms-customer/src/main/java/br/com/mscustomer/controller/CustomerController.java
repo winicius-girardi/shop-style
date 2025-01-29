@@ -1,7 +1,6 @@
 package br.com.mscustomer.controller;
 
 import br.com.mscustomer.controller.request.CustomerRequest;
-import br.com.mscustomer.service.AddressService;
 import br.com.mscustomer.service.CustomerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,7 @@ public class CustomerController {
     }
 
     @PostMapping("/v1/customer")
-    public ResponseEntity<?> createCustomer(@RequestBody CustomerRequest request){
+    public ResponseEntity<Void> createCustomer(@RequestBody CustomerRequest request){
         return customerService.createCustomer(request);
     }
 

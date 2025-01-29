@@ -1,10 +1,9 @@
 package br.com.mscustomer.utils;
 
-import br.com.mscustomer.controller.request.AddressRequest;
+import br.com.mscustomer.controller.request.AddressCreateRequest;
 import br.com.mscustomer.controller.request.CustomerRequest;
-import br.com.mscustomer.controller.response.ErrorField;
-import br.com.mscustomer.enums.Gender;
 import br.com.mscustomer.enums.State;
+import br.com.mscustomer.exception.response.ErrorField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +38,11 @@ public class ValidatorUtils{
 
     }
 
-    public  static List<ErrorField> addressValidation(AddressRequest address){
+    public  static List<ErrorField> addressValidation(AddressCreateRequest address){
 
         List<ErrorField> errors = new ArrayList<>();
 
-        if(!address.cep().matches("^\\d{5}-\\d{3}$"))
+        if(!isValidCep(address.cep()))
             errors.add(createErrorField("ADDRESS","CEP PRECISA SER NO FORMATO XXXXX-XXX"));
 
         if(address.city().isBlank())
@@ -52,7 +51,7 @@ public class ValidatorUtils{
         if(address.state().isBlank())
             errors.add(createErrorField("STATE","ESTADO PRECISA SER INFOMARDO"));
 
-        if(address.number().matches("^\\d$"))
+        if(!isValidNumber(address.number()))
             errors.add(createErrorField("NUMBER","CAMPO NUMERO SÓ PODE CONTER NUMEROS"));
 
         if(address.customerId().describeConstable().isEmpty())
@@ -64,14 +63,28 @@ public class ValidatorUtils{
         if(address.street().isBlank())
             errors.add(createErrorField("STREET","RUA PRECISA SER INFORMADA"));
 
-        try{
-            State.valueOf(address.state());
-        }catch(Exception e){
+        if(!isValidState(address.state()))
             errors.add(createErrorField("STATE","ESTADO INFORMADO É INVÁLIDO"));
-        }
-
 
         return errors;
     }
+
+    public static boolean isValidNumber(String number) {
+        return number.matches("^\\d$");
+    }
+
+    public static boolean isValidCep(String cep) {
+        return cep.matches("^\\d{5}-\\d{3}$");
+    }
+
+    public static boolean isValidState(String state) {
+        try{
+            State.valueOf(state);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
+
 
 }

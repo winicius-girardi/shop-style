@@ -1,13 +1,13 @@
 package br.com.mscustomer.builder;
 
-import br.com.mscustomer.controller.request.AddressRequest;
+import br.com.mscustomer.controller.request.AddressCreateRequest;
 import br.com.mscustomer.controller.request.CustomerRequest;
-import br.com.mscustomer.controller.response.ErrorField;
-import br.com.mscustomer.controller.response.MessageResponse;
 import br.com.mscustomer.entity.Address;
 import br.com.mscustomer.entity.Customer;
 import br.com.mscustomer.enums.Gender;
 import br.com.mscustomer.enums.State;
+import br.com.mscustomer.exception.response.ErrorField;
+import br.com.mscustomer.exception.response.MessageResponse;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
@@ -36,7 +36,7 @@ public class Builder {
                 .build();
     }
 
-    public static Address toAddressEntity(AddressRequest addressRequest){
+    public static Address toAddressEntity(AddressCreateRequest addressRequest){
         return Address.builder()
                 .city(addressRequest.city())
                 .cep(addressRequest.cep().replace("-",""))
