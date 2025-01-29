@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import static br.com.mscustomer.builder.Builder.createMessage;
 import static br.com.mscustomer.builder.Builder.toAddressEntity;
-import static br.com.mscustomer.utils.StringConstants.MSG_ERROR;
+import static br.com.mscustomer.utils.ConstantsUtils.MSG_ERROR;
 import static br.com.mscustomer.utils.ValidatorUtils.*;
 
 @Service
