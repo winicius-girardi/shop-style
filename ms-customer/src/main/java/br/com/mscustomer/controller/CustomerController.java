@@ -1,6 +1,7 @@
 package br.com.mscustomer.controller;
 
 import br.com.mscustomer.controller.request.CustomerRequest;
+import br.com.mscustomer.controller.request.CustomerUpdateRequest;
 import br.com.mscustomer.controller.request.PasswordChangeRequest;
 import br.com.mscustomer.controller.response.CustomerResponse;
 import br.com.mscustomer.service.CustomerService;
@@ -20,18 +21,18 @@ public class CustomerController {
     }
 
     @PostMapping("/v1/customer")
-    public ResponseEntity<Void> createCustomer(@RequestBody CustomerRequest request){
+    public ResponseEntity<Void> createCustomer(@RequestBody final CustomerRequest request){
         return customerService.createCustomer(request);
     }
 
     @GetMapping("/v1/customers/{id}")
-    public ResponseEntity<CustomerResponse> getCustomer(@PathVariable Long id){
+    public ResponseEntity<CustomerResponse> getCustomer(@PathVariable final Long id){
         return customerService.getCustomer(id);
     }
 
     @PutMapping("/v1/customers/{id}")
-    public ResponseEntity<?> updateCustomerData(@PathVariable Long id){
-        return customerService.updateCustomerData();
+    public ResponseEntity<Void> updateCustomer(@PathVariable Long id, @RequestBody final CustomerUpdateRequest request){
+        return customerService.updateCustomerData(request,id);
     }
 
     @PutMapping("/v1/customers/{id}/password")

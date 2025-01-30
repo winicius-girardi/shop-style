@@ -13,12 +13,12 @@ import java.util.List;
 public class ApiExceptionHandler {
 
     @ExceptionHandler(ValidationFieldsException.class)
-    public ResponseEntity<List<ErrorField>> validationExcepton(ValidationFieldsException ex) {
+    public ResponseEntity<List<ErrorField>> validationException(ValidationFieldsException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getErrors());
     }
 
     @ExceptionHandler(DatabaseException.class)
-    public ResponseEntity<MessageResponse> databaseExcepton(DatabaseException ex) {
+    public ResponseEntity<MessageResponse> databaseException(DatabaseException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 

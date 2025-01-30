@@ -1,6 +1,7 @@
 package br.com.mscustomer.service;
 
 import br.com.mscustomer.controller.request.CustomerRequest;
+import br.com.mscustomer.controller.request.CustomerUpdateRequest;
 import br.com.mscustomer.controller.request.PasswordChangeRequest;
 import br.com.mscustomer.controller.response.CustomerResponse;
 import br.com.mscustomer.exception.DatabaseException;
@@ -25,11 +26,17 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
 
-    public ResponseEntity<?> updateCustomerData() {
-        return null;
+    public ResponseEntity<Void> updateCustomerData(final CustomerUpdateRequest request,final long id){
+
+        var customer = customerRepository.findById(id).orElseThrow(
+                () -> new DatabaseException(createMessage(String.format("Não foi encontrado cliente para id '%d'",id))));
+        customer.setActive(request.newActive());
+        customerRepository.save(customer);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    public ResponseEntity<Void> createCustomer(CustomerRequest request){
+    public ResponseEntity<Void> createCustomer(final CustomerRequest request){
         var errorList = customerValidation(request);
         try{
         if(errorList.isEmpty()){
