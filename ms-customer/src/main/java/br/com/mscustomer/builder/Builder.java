@@ -2,12 +2,15 @@ package br.com.mscustomer.builder;
 
 import br.com.mscustomer.controller.request.AddressCreateRequest;
 import br.com.mscustomer.controller.request.CustomerRequest;
+import br.com.mscustomer.controller.response.AddressResponse;
+import br.com.mscustomer.controller.response.CustomerResponse;
 import br.com.mscustomer.entity.Address;
 import br.com.mscustomer.entity.Customer;
 import br.com.mscustomer.enums.Gender;
 import br.com.mscustomer.enums.State;
 import br.com.mscustomer.exception.response.ErrorField;
 import br.com.mscustomer.exception.response.MessageResponse;
+import br.com.mscustomer.model.CustomerAddress;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.time.LocalDate;
@@ -28,7 +31,7 @@ public class Builder {
                 .cpf(customerRequest.cpf().replace(".","").replace("-",""))
                 .firstName(customerRequest.firstName())
                 .lastName(customerRequest.lastName())
-                .gender(createGender(customerRequest.sex()))
+                .gender(parseGender(customerRequest.sex()))
                 .birthdate(formatBirthDate(customerRequest.birthdate()))
                 .active(customerRequest.active())
                 .email(customerRequest.email())
@@ -50,13 +53,38 @@ public class Builder {
                 .build();
     }
 
+    public  static CustomerResponse toCustomerResponse(CustomerAddress customer){
+        return CustomerResponse.builder()
+                .address(toAddressResponse(customer.city(),customer.cep(),
+                        customer.complement(),customer.number(),customer.street(),customer.state())
+                )
+                .gender(Gender.valueOf(customer.gender()))
+                .birthDate(customer.birthDate())
+                .firstName(customer.firstName())
+                .lastName(customer.lastName())
+                .cpf(customer.cpf())
+                .email(customer.email())
+                .build();
+    }
+
+    public static AddressResponse toAddressResponse(String city, String cep, String complement, String number, String street, String state){
+        return AddressResponse.builder()
+                .city(city)
+                .number(number)
+                .street(street)
+                .state(State.valueOf(state))
+                .cep(cep)
+                .complement(complement)
+                .build();
+    }
+
     public static MessageResponse createMessage(String message){
         return MessageResponse.builder()
                 .message(message)
                 .build();
     }
 
-    public static Gender createGender(String gender){
+    public static Gender parseGender(String gender){
         try{
             return Gender.valueOf(gender);
         }catch(IllegalArgumentException e){

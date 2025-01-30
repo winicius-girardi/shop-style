@@ -2,6 +2,7 @@ package br.com.mscustomer.controller;
 
 import br.com.mscustomer.controller.request.CustomerRequest;
 import br.com.mscustomer.controller.request.PasswordChangeRequest;
+import br.com.mscustomer.controller.response.CustomerResponse;
 import br.com.mscustomer.service.CustomerService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +25,8 @@ public class CustomerController {
     }
 
     @GetMapping("/v1/customers/{id}")
-    public ResponseEntity<?> getCustomer(@PathVariable Long id){
-        return customerService.getCustomer();
+    public ResponseEntity<CustomerResponse> getCustomer(@PathVariable Long id){
+        return customerService.getCustomer(id);
     }
 
     @PutMapping("/v1/customers/{id}")
@@ -34,7 +35,7 @@ public class CustomerController {
     }
 
     @PutMapping("/v1/customers/{id}/password")
-    public ResponseEntity<Void> updateCustomerPassword(@PathVariable final Long id, @RequestBody PasswordChangeRequest request){
+    public ResponseEntity<Void> updateCustomerPassword(@PathVariable final Long id, final @RequestBody PasswordChangeRequest request){
         return customerService.updateCustomerPassword(id,request);
     }
 

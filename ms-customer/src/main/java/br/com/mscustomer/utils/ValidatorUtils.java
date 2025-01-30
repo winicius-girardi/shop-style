@@ -17,25 +17,29 @@ public class ValidatorUtils{
         List<ErrorField> errors = new ArrayList<>();
 
         if(!customer.cpf().matches("[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}"))
-            errors.add(createErrorField("CPF","CPF INFORMADO NÃO ESTÁ NO FORMATO XXX.XXX.XXX-XX"));
+            errors.add(createErrorField("CPF","CPF NÃO ESTÁ NO FORMATO XXX.XXX.XXX-XX"));
 
         if(customer.firstName().replace(" ","").length()<3||customer.firstName().contains("[0-9]"))
-            errors.add(createErrorField("FIRSTNAME","NOME INFORADO DEVE TER PELO MENOS 3 CARACTERES VÁLIDOS"));
+            errors.add(createErrorField("FIRSTNAME","NOME DEVE TER PELO MENOS 3 CARACTERES VÁLIDOS"));
 
         if(customer.lastName().replace(" ","").length()<3||customer.lastName().contains("[0-9]"))
-            errors.add(createErrorField("LASTNAME","SOBRENOME INFORADO DEVE TER PELO MENOS 3 CARACTERES VÁLIDOS"));
+            errors.add(createErrorField("LASTNAME","SOBRENOME DEVE TER PELO MENOS 3 CARACTERES VÁLIDOS"));
 
         if(!customer.email().matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$"))
-            errors.add(createErrorField("EMAIL","EMAIL INFORADO DEVE TER FORMATO VÁLIDO"));
+            errors.add(createErrorField("EMAIL","EMAIL DEVE TER FORMATO VÁLIDO"));
 
-        if(customer.password().replace(" ","").length()<6)
-            errors.add(createErrorField("PASSWORD","SENHA INFORMADA DEVE TER PELO MENOS 6 CARACTERES VÁLIDOS."));
+        if(!isValidPassword(customer.password()))
+            errors.add(createErrorField("PASSWORD","SENHA DEVE TER PELO MENOS 6 CARACTERES VÁLIDOS."));
 
         if(!customer.birthdate().matches("^\\d{4}-\\d{2}-\\d{2}$"))
             errors.add(createErrorField("BIRTHDATE","DATA DE NASCIMENTO PRECISA ESTAR NO FORMATO 'ANO-MES-DIA'."));
 
         return errors;
 
+    }
+
+    public static boolean isValidPassword(String password) {
+        return password.replace(" ", "").length() < 6;
     }
 
     public  static List<ErrorField> addressValidation(AddressCreateRequest address){
