@@ -22,4 +22,10 @@ class CategoryService(private val categoryRepository: CategoryRepository){
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
 
+    fun deleteCategory(id: Long) : ResponseEntity<Void> {
+        categoryRepository.updateActiveById(id,false)
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
+    }
+
+
 }

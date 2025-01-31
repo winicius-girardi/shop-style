@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
 @Controller
-class CategoryController (private var categoryService: CategoryService) {
+class CategoryController (private val categoryService: CategoryService) {
 
     @PostMapping("/v1/categories")
     fun createCategories(@RequestBody request: CategoryRequest): ResponseEntity<Void>{
@@ -15,16 +15,17 @@ class CategoryController (private var categoryService: CategoryService) {
     }
 
     @DeleteMapping("/v1/categories/{id}")
-    fun deleteCategories(@PathVariable id: String) {
+    fun deleteCategories(@PathVariable id: Long): ResponseEntity<Void>{
+        return categoryService.deleteCategory(id)
     }
 
     @GetMapping("/v1/categories/{id}/products")
-    fun getCategoriesWithProduct(@PathVariable id: String) {
+    fun getCategoriesWithProduct(@PathVariable id: Long) {
     }
 
 
     @PutMapping("/v1/categories/{id}")
-    fun changeCategories(@PathVariable id: String) {
+    fun changeCategories(@PathVariable id: Long) {
     }
 
     @GetMapping("v1/categories")
