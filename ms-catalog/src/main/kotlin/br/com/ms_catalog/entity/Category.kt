@@ -13,7 +13,7 @@ class Category(
     @Column(name = "NAME", nullable = false)
     var name: String,
 
-    @Column(name = "DESCRIPTION", nullable = false)
+    @Column(name = "active", nullable = false)
     var active: Boolean,
 
     @Column(name = "PARENT_ID", nullable = false)
