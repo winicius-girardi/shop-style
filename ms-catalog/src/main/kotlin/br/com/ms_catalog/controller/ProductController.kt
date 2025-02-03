@@ -1,6 +1,7 @@
 package br.com.ms_catalog.controller
 
 import br.com.ms_catalog.controller.request.ProductRequest
+import br.com.ms_catalog.controller.request.ProductUpdateRequest
 import br.com.ms_catalog.controller.response.ProductResponse
 import br.com.ms_catalog.service.ProductService
 import org.springframework.http.ResponseEntity
@@ -31,6 +32,7 @@ class ProductController(val  productService: ProductService) {
     }
 
     @PutMapping("/v1/products/{id}")
-    fun changeProduct(@PathVariable id: String){
+    fun changeProduct(@PathVariable id: Long,@RequestBody request: ProductUpdateRequest): ResponseEntity<Void> {
+        return productService.updateProduct(id,request.name,request.description,request.brand,request.material)
     }
 }
