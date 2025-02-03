@@ -12,7 +12,7 @@ data class ProductResponse(
 ){
 
     companion object {
-        fun toProductResponseList(p: Product): ProductResponse {
+        fun toProductResponse(p: Product): ProductResponse {
             return ProductResponse(
                 id = p.id,
                 name = p.name,

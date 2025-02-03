@@ -2,6 +2,7 @@ package br.com.ms_catalog.service
 
 import br.com.ms_catalog.controller.request.ProductRequest
 import br.com.ms_catalog.controller.response.ProductResponse
+import br.com.ms_catalog.exception.DatabaseException
 import br.com.ms_catalog.exception.ValidationException
 import br.com.ms_catalog.repository.CategoryRepository
 import br.com.ms_catalog.repository.ProductRepository
@@ -31,9 +32,15 @@ class ProductService(val  productRepository: ProductRepository,val categoryRepos
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 
+    fun getProduct(id: Long): ResponseEntity<ProductResponse> {
+        return ResponseEntity.status(HttpStatus.OK).body(ProductResponse.toProductResponse(productRepository.findById(id)
+            .orElseThrow{DatabaseException("Error while trying to find product by id: $id")})
+        )
+    }
+
     fun getAllProducts():ResponseEntity<List<ProductResponse>>{
 
-        return ResponseEntity.status(HttpStatus.OK).body(productRepository.findAll().map { ProductResponse.toProductResponseList(it)})
+        return ResponseEntity.status(HttpStatus.OK).body(productRepository.findAll().map { ProductResponse.toProductResponse(it)})
     }
 
 }
