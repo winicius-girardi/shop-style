@@ -1,6 +1,8 @@
 package br.com.ms_catalog.controller
 
 import br.com.ms_catalog.controller.request.ProductRequest
+import br.com.ms_catalog.controller.response.ProductResponse
+import br.com.ms_catalog.entity.Product
 import br.com.ms_catalog.service.ProductService
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -19,7 +21,8 @@ class ProductController(val  productService: ProductService) {
     }
 
     @GetMapping("/v1/products")
-    fun getAllProducts() {
+    fun getAllProducts(): ResponseEntity<List<ProductResponse>> {
+        return productService.getAllProducts()
     }
 
     @PostMapping("/v1/products")
