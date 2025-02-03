@@ -1,7 +1,9 @@
 package br.com.ms_catalog.service
 
 import br.com.ms_catalog.controller.request.CategoryRequest
+import br.com.ms_catalog.controller.request.CategoryUpdateRequest
 import br.com.ms_catalog.controller.response.CategoryTreeResponse
+import br.com.ms_catalog.controller.response.ErrorField
 import br.com.ms_catalog.entity.Category
 import br.com.ms_catalog.exception.ValidationException
 import br.com.ms_catalog.repository.CategoryRepository
@@ -9,6 +11,7 @@ import br.com.ms_catalog.utils.validateCategory
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import org.springframework.web.bind.annotation.RequestBody
 
 @Service
 class CategoryService(private val categoryRepository: CategoryRepository){
@@ -35,6 +38,17 @@ class CategoryService(private val categoryRepository: CategoryRepository){
         val categoryTree = buildHierarchy(categoryList)
         return ResponseEntity.status(HttpStatus.OK).body(categoryTree)
     }
+
+    fun updateCategory(id: Long,request: CategoryUpdateRequest):ResponseEntity<Void>{
+
+        if(request.name.isBlank())
+            throw ValidationException(listOf(ErrorField("name","name cannot be blank")))
+
+        categoryRepository.updateFieldCategory(id,request.name)
+        return ResponseEntity.status(HttpStatus.OK).build()
+    }
+
+
 
     fun buildHierarchy(categoryList: List<Category>): List<CategoryTreeResponse> {
 

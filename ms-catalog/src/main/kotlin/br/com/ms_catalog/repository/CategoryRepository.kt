@@ -15,20 +15,27 @@ interface CategoryRepository :JpaRepository<Category, Long> {
     fun updateActiveById(id: Long, active: Boolean){
 
     }
+    @Transactional
+    @Modifying
+    @Query("UPDATE Category c SET  c.name=:name WHERE c.id = :id")
+    fun updateFieldCategory(id:Long, name: String){
 
-    @Query(value = """
-    WITH RECURSIVE category_tree AS (
-        SELECT id, name, active, parent_id
-        FROM MS_CATALOG_SCH.CATEGORY
-        WHERE id = :parentId
-        UNION ALL
-        SELECT c.id, c.name, c.active, c.parent_id
-        FROM MS_CATALOG_SCH.CATEGORY c
-        INNER JOIN category_tree ct ON c.parent_id = ct.id
-    )
-    SELECT * FROM category_tree;
-    """, nativeQuery = true)
-    fun findCategoryTree(@Param("parentId") parentId: Long): List<Category>
+    }
+
+
+//    @Query(value = """
+//    WITH RECURSIVE category_tree AS (
+//        SELECT id, name, active, parent_id
+//        FROM MS_CATALOG_SCH.CATEGORY
+//        WHERE id = :parentId
+//        UNION ALL
+//        SELECT c.id, c.name, c.active, c.parent_id
+//        FROM MS_CATALOG_SCH.CATEGORY c
+//        INNER JOIN category_tree ct ON c.parent_id = ct.id
+//    )
+//    SELECT * FROM category_tree;
+//    """, nativeQuery = true)
+//    fun findCategoryTree(@Param("parentId") parentId: Long): List<Category>
 
 
 }
