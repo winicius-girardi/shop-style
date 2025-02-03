@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*
 class ProductController(val  productService: ProductService) {
 
     @DeleteMapping("/v1/products/{id}")
-    fun deleteProduct(@PathVariable id: String) {
+    fun deleteProduct(@PathVariable id: Long): ResponseEntity<Void> {
+        return productService.deleteProduct(id)
     }
 
     @GetMapping("/v1/products/{id}")

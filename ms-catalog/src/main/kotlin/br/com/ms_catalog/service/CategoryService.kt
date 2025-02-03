@@ -28,7 +28,7 @@ class CategoryService(private val categoryRepository: CategoryRepository){
     }
 
     fun deleteCategory(id: Long) : ResponseEntity<Void> {
-
+        //TODO -> DO SOFT ON CHILDREN TO or  JUST THE BY ID?
         categoryRepository.updateActiveById(id,false)
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
     }

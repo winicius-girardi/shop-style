@@ -24,4 +24,10 @@ class ProductService(val  productRepository: ProductRepository,val categoryRepos
 
         return ResponseEntity.status(HttpStatus.CREATED).build()
     }
+
+    fun deleteProduct(id: Long) : ResponseEntity<Void> {
+        productRepository.updateActiveById(id,false)
+        return ResponseEntity(HttpStatus.NO_CONTENT)
+    }
+
 }
