@@ -21,16 +21,17 @@ class CategoryController (private val categoryService: CategoryService) {
     }
 
     @GetMapping("/v1/categories/{id}/products")
-    fun getCategoriesWithChildren(@PathVariable id: Long): ResponseEntity<List<CategoryTreeResponse>>{
-        return categoryService.getCategoryWithChidren(id)
+    fun getCategoriesWithChildren(@PathVariable id: Long){
+        return
     }
 
 
     @PutMapping("/v1/categories/{id}")
-    fun changeCategories(@PathVariable id: Long) {
+    fun changeCategories(@PathVariable id: Long){
     }
 
     @GetMapping("v1/categories")
-    fun getCategories() {
+    fun getAllCategories():ResponseEntity<List<CategoryTreeResponse>>{
+        return categoryService.getAllCategories()
     }
 }

@@ -16,6 +16,6 @@ class Category(
     @Column(name = "active", nullable = false)
     var active: Boolean,
 
-    @Column(name = "PARENT_ID", nullable = false)
+    @Column(name = "PARENT_ID", nullable = true)
     var parentId: Long?
 )

@@ -17,7 +17,7 @@ class CategoryService(private val categoryRepository: CategoryRepository){
 
         val validation= validateCategory(request,categoryRepository)
 
-        if(validation.isEmpty())
+        if(validation.isNotEmpty())
             throw ValidationException(validation)
 
         categoryRepository.save(request.toCategoryEntity())
@@ -25,19 +25,20 @@ class CategoryService(private val categoryRepository: CategoryRepository){
     }
 
     fun deleteCategory(id: Long) : ResponseEntity<Void> {
+
         categoryRepository.updateActiveById(id,false)
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
     }
 
-    fun getCategoryWithChidren(id: Long) :ResponseEntity<List<CategoryTreeResponse>> {
-        val categoryList = categoryRepository.findCategoryTree(id)
-        val categoryTree = buildHierarchy(categoryList,id)
+    fun getAllCategories() :ResponseEntity<List<CategoryTreeResponse>> {
+        val categoryList = categoryRepository.findAll()
+        val categoryTree = buildHierarchy(categoryList)
         return ResponseEntity.status(HttpStatus.OK).body(categoryTree)
     }
 
-    fun buildHierarchy(categoryList: List<Category>,startId:Long): List<CategoryTreeResponse> {
+    fun buildHierarchy(categoryList: List<Category>): List<CategoryTreeResponse> {
 
-        val rootCategories =  categoryList.filter { it.parentId == null || it.id == startId }
+        val rootCategories =  categoryList.filter { it.parentId == null }
 
         return rootCategories
             .map { category ->

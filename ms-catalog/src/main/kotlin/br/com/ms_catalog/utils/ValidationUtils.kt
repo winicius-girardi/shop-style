@@ -11,12 +11,13 @@ fun validateCategory(request: CategoryRequest,categoryRepository: CategoryReposi
     if (request.name.isEmpty())
          errors.add(ErrorField("name", "Name is required"))
 
-    if (request.parentId < 0)
-        errors.add(ErrorField("parentId", "ParentId is required"))
-    categoryRepository.findById(request.parentId).ifPresentOrElse(
-        { },
-        { errors.add(ErrorField("parentId", "ParentId doesn't exist")) }
-    )
-
+    if(request.parentId != null || request.parentId==0L) {
+        if (request.parentId < 0)
+            errors.add(ErrorField("parentId", "ParentId is required"))
+        categoryRepository.findById(request.parentId).ifPresentOrElse(
+            { },
+            { errors.add(ErrorField("parentId", "ParentId doesn't exist")) }
+        )
+    }
     return errors
 }
