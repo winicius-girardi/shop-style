@@ -1,6 +1,8 @@
 package br.com.ms_catalog.service
 
 import br.com.ms_catalog.controller.request.CategoryRequest
+import br.com.ms_catalog.controller.response.CategoryTreeResponse
+import br.com.ms_catalog.entity.Category
 import br.com.ms_catalog.exception.ValidationException
 import br.com.ms_catalog.repository.CategoryRepository
 import br.com.ms_catalog.utils.validateCategory
@@ -27,5 +29,38 @@ class CategoryService(private val categoryRepository: CategoryRepository){
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
     }
 
+    fun getCategoryWithChidren(id: Long) :ResponseEntity<List<CategoryTreeResponse>> {
+        val categoryList = categoryRepository.findCategoryTree(id)
+        val categoryTree = buildHierarchy(categoryList,id)
+        return ResponseEntity.status(HttpStatus.OK).body(categoryTree)
+    }
 
+    fun buildHierarchy(categoryList: List<Category>,startId:Long): List<CategoryTreeResponse> {
+
+        val rootCategories =  categoryList.filter { it.parentId == null || it.id == startId }
+
+        return rootCategories
+            .map { category ->
+                CategoryTreeResponse(
+                    category.name,
+                    category.active,
+                    category.id,
+                    buildChildren(categoryList, category.id)
+                )
+            }
+    }
+
+    fun buildChildren(categoryList: List<Category>, parentId: Long): List<CategoryTreeResponse>? {
+        val children =categoryList
+            .filter { it.parentId == parentId }
+            .map { category ->
+                CategoryTreeResponse(
+                    category.name,
+                    category.active,
+                    category.id,
+                    buildChildren(categoryList, category.id)
+                )
+            }
+        return children.ifEmpty { null }
+    }
 }

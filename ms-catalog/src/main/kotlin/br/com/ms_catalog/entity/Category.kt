@@ -17,5 +17,5 @@ class Category(
     var active: Boolean,
 
     @Column(name = "PARENT_ID", nullable = false)
-    var parentId: Long
+    var parentId: Long?
 )

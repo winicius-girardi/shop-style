@@ -1,6 +1,7 @@
 package br.com.ms_catalog.controller
 
 import br.com.ms_catalog.controller.request.CategoryRequest
+import br.com.ms_catalog.controller.response.CategoryTreeResponse
 import br.com.ms_catalog.service.CategoryService
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
@@ -20,7 +21,8 @@ class CategoryController (private val categoryService: CategoryService) {
     }
 
     @GetMapping("/v1/categories/{id}/products")
-    fun getCategoriesWithProduct(@PathVariable id: Long) {
+    fun getCategoriesWithChildren(@PathVariable id: Long): ResponseEntity<List<CategoryTreeResponse>>{
+        return categoryService.getCategoryWithChidren(id)
     }
 
 
