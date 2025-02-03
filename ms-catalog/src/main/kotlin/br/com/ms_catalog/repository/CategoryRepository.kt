@@ -4,7 +4,6 @@ import br.com.ms_catalog.entity.Category
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
-import org.springframework.data.repository.query.Param
 import org.springframework.transaction.annotation.Transactional
 
 interface CategoryRepository :JpaRepository<Category, Long> {
@@ -12,15 +11,28 @@ interface CategoryRepository :JpaRepository<Category, Long> {
     @Transactional
     @Modifying
     @Query("UPDATE Category c SET c.active = :active WHERE c.id = :id")
-    fun updateActiveById(id: Long, active: Boolean){
+    fun updateActiveById(id: Long, active: Boolean)
 
-    }
     @Transactional
     @Modifying
     @Query("UPDATE Category c SET  c.name=:name WHERE c.id = :id")
-    fun updateFieldCategory(id:Long, name: String){
+    fun updateFieldCategory(id:Long, name: String)
 
-    }
+    // select  c.id from ms_catalog_sch.category c join ms_catalog_sch.category d on c.id=d.parent_Id where c.active=true and c.id=1 ; --funfa
+    //@Query("SELECT C.id,C.active FROM Category C INNER JOIN Category D WHERE C.active = true AND C.id = :id")
+    @Query("""
+    SELECT CASE 
+               WHEN EXISTS (
+                   SELECT 1
+                   FROM ms_catalog_sch.category c
+                   JOIN ms_catalog_sch.category d ON c.id = d.parent_id
+                   WHERE c.id = :id and c.active = true
+               ) THEN false
+               ELSE true
+           END as result
+    """, nativeQuery = true)
+    fun isValidCategoryById(id: Long): Boolean
+
 
 
 //    @Query(value = """
