@@ -2,8 +2,10 @@ package br.com.ms_catalog.utils
 
 import br.com.ms_catalog.controller.request.CategoryRequest
 import br.com.ms_catalog.controller.request.ProductRequest
+import br.com.ms_catalog.controller.request.SkuRequest
 import br.com.ms_catalog.controller.response.ErrorField
 import br.com.ms_catalog.repository.CategoryRepository
+import br.com.ms_catalog.repository.ProductRepository
 
 
 fun validateCategory(request: CategoryRequest,categoryRepository: CategoryRepository): List<ErrorField> {
@@ -45,4 +47,35 @@ fun validateProduct(request: ProductRequest, categoryRepository: CategoryReposit
         errors.add(ErrorField("categoryId", "CategoryId has children or is inactive"))
 
     return errors
+}
+
+fun validateSku(sku:SkuRequest,productRepository: ProductRepository): List<ErrorField> {
+    val errors = mutableListOf<ErrorField>()
+
+    if(sku.price < 0)
+        errors.add(ErrorField("price","Price must be greater than 0"))
+
+    if(sku.quantity < 0)
+        errors.add(ErrorField("quantity","Quantity must be greater than 0"))
+
+    if(sku.color.isEmpty())
+        errors.add(ErrorField("color","Color is required"))
+
+    if(sku.size.isEmpty())
+        errors.add(ErrorField("size","Size is required"))
+
+    if(sku.height < 0)
+        errors.add(ErrorField("height","Height must be greater than 0"))
+
+    if(sku.width < 0)
+        errors.add(ErrorField("width","Width must be greater than 0"))
+
+    if(sku.productId < 0)
+        errors.add(ErrorField("productId","ProductId is required"))
+
+    if(!productRepository.existsById(sku.productId))
+        errors.add(ErrorField("productId","ProductId doesn't exist"))
+
+    return errors
+
 }
