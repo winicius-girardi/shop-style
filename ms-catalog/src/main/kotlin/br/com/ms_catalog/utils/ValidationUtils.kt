@@ -3,6 +3,7 @@ package br.com.ms_catalog.utils
 import br.com.ms_catalog.controller.request.CategoryRequest
 import br.com.ms_catalog.controller.request.ProductRequest
 import br.com.ms_catalog.controller.request.SkuRequest
+import br.com.ms_catalog.controller.request.SkuUpdateRequest
 import br.com.ms_catalog.controller.response.ErrorField
 import br.com.ms_catalog.repository.CategoryRepository
 import br.com.ms_catalog.repository.ProductRepository
@@ -75,6 +76,24 @@ fun validateSku(sku:SkuRequest,productRepository: ProductRepository): List<Error
 
     if(!productRepository.existsById(sku.productId))
         errors.add(ErrorField("productId","ProductId doesn't exist"))
+
+    return errors
+
+}
+fun validateSkuUpdate(sku:SkuUpdateRequest): List<ErrorField> {
+    val errors = mutableListOf<ErrorField>()
+
+    if(sku.price!=null&& sku.price < 0)
+        errors.add(ErrorField("price","Price must be greater than 0"))
+
+    if(sku.quantity!=null&&sku.quantity < 0)
+        errors.add(ErrorField("quantity","Quantity must be greater than 0"))
+
+    if(sku.height!=null&&sku.height < 0)
+        errors.add(ErrorField("height","Height must be greater than 0"))
+
+    if(sku.width!=null&&sku.width < 0)
+        errors.add(ErrorField("width","Width must be greater than 0"))
 
     return errors
 
