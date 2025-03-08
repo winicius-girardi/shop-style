@@ -9,5 +9,4 @@ class MsCatalogApplicationTests {
 	@Test
 	fun contextLoads() {
 	}
-
 }
