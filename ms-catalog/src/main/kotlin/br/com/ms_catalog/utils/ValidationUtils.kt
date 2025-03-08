@@ -53,7 +53,7 @@ fun validateProduct(request: ProductRequest, categoryRepository: CategoryReposit
 fun validateSku(sku:SkuRequest,productRepository: ProductRepository): List<ErrorField> {
     val errors = mutableListOf<ErrorField>()
 
-    if(sku.price < 0)
+    if(sku.price <= 0)
         errors.add(ErrorField("price","Price must be greater than 0"))
 
     if(sku.quantity < 0)
