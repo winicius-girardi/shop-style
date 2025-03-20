@@ -56,7 +56,7 @@ fun validateSku(sku:SkuRequest,productRepository: ProductRepository): List<Error
     if(sku.price <= 0)
         errors.add(ErrorField("price","Price must be greater than 0"))
 
-    if(sku.quantity < 0)
+    if(sku.quantity <= 0)
         errors.add(ErrorField("quantity","Quantity must be greater than 0"))
 
     if(sku.color.isEmpty())
@@ -65,17 +65,20 @@ fun validateSku(sku:SkuRequest,productRepository: ProductRepository): List<Error
     if(sku.size.isEmpty())
         errors.add(ErrorField("size","Size is required"))
 
-    if(sku.height < 0)
+    if(sku.height <= 0)
         errors.add(ErrorField("height","Height must be greater than 0"))
 
-    if(sku.width < 0)
+    if(sku.width <= 0)
         errors.add(ErrorField("width","Width must be greater than 0"))
 
-    if(sku.productId < 0)
+    if(sku.productId <= 0)
         errors.add(ErrorField("productId","ProductId is required"))
 
     if(!productRepository.existsById(sku.productId))
         errors.add(ErrorField("productId","ProductId doesn't exist"))
+
+    if(sku.images.isEmpty())
+        errors.add(ErrorField("images","Images is required"))
 
     return errors
 

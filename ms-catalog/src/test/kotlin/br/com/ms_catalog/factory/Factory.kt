@@ -6,7 +6,7 @@ import br.com.ms_catalog.entity.Sku
 
 
 
-const val VALID_PRODUCT = """{
+const val VALID_SKU = """{
                         "price": 10.0,
                         "quantity": 10,
                         "color": "red",
@@ -16,16 +16,48 @@ const val VALID_PRODUCT = """{
                         "images": ["image1","image2"],
                         "productId": 1
                         }"""
-const val INVALID_PRODUCT = """{
-                        "price": ,
-                        "quantity": ,
-                        "color": ,
-                        "size": ,
-                        "height":,
-                        "width": ,
-                        "images": ,
-                        "productId": 1
-                        }"""
+
+const val INVALID_SKU = """{
+                            "price":0 ,
+                            "quantity": 0,
+                            "color":"" ,
+                            "size":"" ,
+                            "height": 0,
+                            "width": 0,
+                            "images": [],
+                            "productId": 1
+                            }"""
+
+const val RESPONSE_INVALID_SKU="""[
+                        {
+                            "fieldName": "price",
+                            "message": "Price must be greater than 0"
+                        },
+                        {
+                            "fieldName": "quantity",
+                            "message": "Quantity must be greater than 0"
+                        },
+                        {
+                            "fieldName": "color",
+                            "message": "Color is required"
+                        },
+                        {
+                            "fieldName": "size",
+                            "message": "Size is required"
+                        },
+                        {
+                            "fieldName": "height",
+                            "message": "Height must be greater than 0"
+                        },
+                        {
+                            "fieldName": "width",
+                            "message": "Width must be greater than 0"
+                        },
+                        {
+                            "fieldName": "images",
+                            "message": "Images is required"
+                        }
+                        ]"""
 
 
 fun getProduct(): Product {
