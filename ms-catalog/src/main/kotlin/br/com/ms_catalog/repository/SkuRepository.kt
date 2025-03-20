@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query
 interface SkuRepository :  JpaRepository<Sku, Long> {
 
     @Modifying
-    @Query("DELETE FROM Sku s WHERE s.productId = :id")
+    @Query("DELETE FROM Sku  WHERE id = :id")
     fun deleteBySkuId(id: Long)
 }

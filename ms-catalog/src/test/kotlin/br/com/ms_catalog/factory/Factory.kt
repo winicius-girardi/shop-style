@@ -6,59 +6,99 @@ import br.com.ms_catalog.entity.Sku
 
 
 
-const val VALID_SKU = """{
-                        "price": 10.0,
-                        "quantity": 10,
-                        "color": "red",
-                        "size": "M",
-                        "height": 10.0,
-                        "width": 10.0,
-                        "images": ["image1","image2"],
-                        "productId": 1
-                        }"""
+const val VALID_SKU =
+    """{
+        "price": 10.0,
+        "quantity": 10,
+        "color": "red",
+        "size": "M",
+        "height": 10.0,
+        "width": 10.0,
+        "images": ["image1","image2"],
+        "productId": 1
+    }"""
 
-const val INVALID_SKU = """{
-                            "price":0 ,
-                            "quantity": 0,
-                            "color":"" ,
-                            "size":"" ,
-                            "height": 0,
-                            "width": 0,
-                            "images": [],
-                            "productId": 1
-                            }"""
+const val INVALID_SKU =
+    """{
+        "price":0 ,
+        "quantity": 0,
+        "color":"" ,
+        "size":"" ,
+        "height": 0,
+        "width": 0,
+        "images": [],
+        "productId": 1
+    }"""
 
-const val RESPONSE_INVALID_SKU="""[
-                        {
-                            "fieldName": "price",
-                            "message": "Price must be greater than 0"
-                        },
-                        {
-                            "fieldName": "quantity",
-                            "message": "Quantity must be greater than 0"
-                        },
-                        {
-                            "fieldName": "color",
-                            "message": "Color is required"
-                        },
-                        {
-                            "fieldName": "size",
-                            "message": "Size is required"
-                        },
-                        {
-                            "fieldName": "height",
-                            "message": "Height must be greater than 0"
-                        },
-                        {
-                            "fieldName": "width",
-                            "message": "Width must be greater than 0"
-                        },
-                        {
-                            "fieldName": "images",
-                            "message": "Images is required"
-                        }
-                        ]"""
+const val VALID_SKU_WITH_PRODUCT_ID_INVALID =
+    """{
+        "price": 10.0,
+        "quantity": 10,
+        "color": "red",
+        "size": "M",
+        "height": 10.0,
+        "width": 10.0,
+        "images": ["image1","image2"],
+        "productId": 9999
+    }"""
 
+const val VALID_SKU_CHANGE =
+    """{
+        "price": 10.1,
+        "quantity": 10,
+        "color": "blue",
+        "size": "M",
+        "height": 50.1,
+        "width": 30.1
+    }"""
+const val ERROR_UPDATE_SKU=
+    """[{
+        "fieldName":"FIELDS",
+        "message":"At least one field must be filled"
+    }]"""
+
+const val RESPONSE_INVALID_SKU_DATA=
+    """[
+        {
+            "fieldName": "price",
+            "message": "Price must be greater than 0"
+        },
+        {
+            "fieldName": "quantity",
+            "message": "Quantity must be greater than 0"
+        },
+        {
+            "fieldName": "color",
+            "message": "Color is required"
+        },
+        {
+            "fieldName": "size",
+            "message": "Size is required"
+        },
+        {
+            "fieldName": "height",
+            "message": "Height must be greater than 0"
+        },
+        {
+            "fieldName": "width",
+            "message": "Width must be greater than 0"
+        },
+        {
+            "fieldName": "images",
+            "message": "Images is required"
+        }
+    ]"""
+
+const val RESPONSE_INVALID_PRODUCT_ID =
+    """[{
+        "fieldName":"productId",
+        "message":"ProductId doesn't exist"
+    }]"""
+
+const val RESPONSE_ERROR_DATABASE=
+    """[{
+        "message": Error while trying to delete sku with id: 1
+    }]"""
 
 fun getProduct(): Product {
     return Product(

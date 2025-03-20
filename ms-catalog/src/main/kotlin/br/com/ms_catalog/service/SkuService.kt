@@ -4,6 +4,7 @@ import br.com.ms_catalog.controller.request.SkuRequest
 import br.com.ms_catalog.controller.request.SkuUpdateRequest
 import br.com.ms_catalog.controller.response.ErrorField
 import br.com.ms_catalog.entity.Media
+import br.com.ms_catalog.exception.DatabaseException
 import br.com.ms_catalog.exception.ValidationException
 import br.com.ms_catalog.repository.MediaRepository
 import br.com.ms_catalog.repository.ProductRepository
@@ -37,6 +38,8 @@ class SkuService(val skuRepository: SkuRepository,
 
     @Transactional
     fun changeSkus(id: Long,request: SkuUpdateRequest):ResponseEntity<Void> {
+        //TODO -> VALIDAR SE O ID PASSADO EXISTS AKA O SKU QUE SERA ALTERADO EXISTE NO BANCO
+
         val errors=validateSkuUpdate(request)
 
         if(errors.isNotEmpty())
@@ -90,8 +93,13 @@ class SkuService(val skuRepository: SkuRepository,
 
     @Transactional
     fun deleteSkus(id: Long) :ResponseEntity<Void> {
-        skuRepository.deleteBySkuId(id)
-        mediaRepository.deleteById(id)
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
+        try {
+            mediaRepository.deleteBySkuId(id)
+            skuRepository.deleteBySkuId(id)
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build()
+        }
+        catch (ex: Exception){
+            throw DatabaseException("Error while trying to delete sku with id: $id")
+        }
     }
 }
