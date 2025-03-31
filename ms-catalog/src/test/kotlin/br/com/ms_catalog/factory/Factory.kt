@@ -1,11 +1,5 @@
 package br.com.ms_catalog.factory
 
-import br.com.ms_catalog.entity.Category
-import br.com.ms_catalog.entity.Product
-import br.com.ms_catalog.entity.Sku
-
-
-
 const val VALID_SKU =
     """{
         "price": 10.0,
@@ -157,44 +151,62 @@ const val RESPONSE_ALL_CATEGORY=
         ]
         }]"""
 
+const val VALID_PRODUCT=
+    """{
+        "name": "Camisa Oficial do Gremio", 
+        "description": "A camisa pra você que é tricolor de coração", 
+        "brand": "Umbro", 
+        "material": "Algodão",
+        "active": true, 
+        "categoryId": 3
+    }"""
 
-fun getProduct(): Product {
-    return Product(
-        id = 0L,
-        name = "Product Test",
-        description = "Product Test Description",
-        brand = "Brand Test",
-        material = "Material Test",
-        active = true,
-        categoryId = 1L
-    )
-}
-fun getCategogyFather():Category{
-    return Category(
-        id = 0L,
-        name = "Category Test",
-        active = true,
-        parentId = null
-    )
-}
-fun getCategoryChildren():Category{
-    return Category(
-        id = 0L,
-        name = "Category Children Test",
-        active = true,
-        parentId = 1L
-    )
-}
-fun getSku(): Sku {
-    return Sku(
-        id = 0L,
-        price = 10.0,
-        quantity = 10,
-        color = "red",
-        size = "M",
-        height = 10.0,
-        width = 10.0,
-        productId = 1L
-    )
-}
 
+const val INVALID_PRODUCT=
+    """{
+        "name": "", 
+        "description": "", 
+        "brand": "", 
+        "material": "",
+        "active": true, 
+        "categoryId": 1 
+    }"""
+
+const val RESPONSE_INVALID_PRODUCT =
+    """
+        [
+            {
+                "fieldName":"name",
+                "message":"Name is required"
+            },
+            {
+                "fieldName":"description",
+                "message":"Description is required"
+            },
+            {
+                "fieldName":"brand",
+                "message":"Brand is required"
+            },
+            {
+                "fieldName":"material",
+                "message":"Material is required"
+            },
+            {
+                "fieldName":"categoryId",
+                "message":"CategoryId has children or is inactive"
+            }
+        ]
+    """
+const val RESPONSE_ALL_PRODUCTS=
+    """
+        [
+            {
+                "id":1,
+                "name":"Calça Jeans",
+                "description":"Calça jeans azul",
+                "brand":"Levis",
+                "material":"Jeans",
+                "categoryId":2
+            }
+        ]
+    """
