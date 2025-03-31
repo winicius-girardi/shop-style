@@ -2,14 +2,12 @@ package br.com.ms_catalog.controller
 
 import br.com.ms_catalog.factory.*
 import br.com.ms_catalog.repository.MediaRepository
-import br.com.ms_catalog.repository.ProductRepository
 import br.com.ms_catalog.repository.SkuRepository
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.MethodOrderer
 import org.junit.jupiter.api.Order
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.anyLong
-import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mockito
+import org.junit.jupiter.api.TestMethodOrder
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
@@ -18,7 +16,8 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
@@ -28,13 +27,12 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @SpringBootTest
 @ActiveProfiles("test")
 @Testcontainers
+@TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class SkuControllerTest {
 
     @Autowired
-    private lateinit var productRepository: ProductRepository
-
-    @Autowired
     private lateinit var skuRepository: SkuRepository
+
     @Autowired
     private lateinit var mediaRepository: MediaRepository
 

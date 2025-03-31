@@ -100,6 +100,64 @@ const val RESPONSE_ERROR_DATABASE=
         "message": Error while trying to delete sku with id: 1
     }]"""
 
+const val VALID_CATEGORY =
+    """{
+        "name":"cavalo",
+        "active":true,
+        "parentId":1
+    }"""
+
+const val INVALID_CATEGORY=
+    """{
+        "name":"",
+        "active":"",
+        "parentId":999
+    }"""
+
+const val RESPONSE_MEDIA_INVALID=
+    """[{
+        "fieldName":"name",
+        "message":"Name is required"},
+        {
+        "fieldName":"parentId",
+        "message":"ParentId doesn't exist"
+    }]"""
+
+const val VALID_UPDATE_CATEGORY=
+    """{
+       "name": "teste_teste" 
+    }"""
+
+const val INVALID_UPDATE_CATEGORY=
+    """{
+        "name": ""
+    }"""
+
+const val RESPONSE_INVALID_MEDIA_UPDATE=
+    """[{
+        "fieldName":"name",
+        "message":"name cannot be blank"
+    }]"""
+
+const val RESPONSE_ALL_CATEGORY=
+    """[{
+        "name":"Roupas",
+        "active":true,
+        "id":1,
+        "children":[{
+            "name":"Calças",
+            "active":true,
+            "id":2
+            },
+            {
+            "name":"Camisas",
+            "active":true,
+            "id":3
+            }
+        ]
+        }]"""
+
+
 fun getProduct(): Product {
     return Product(
         id = 0L,
