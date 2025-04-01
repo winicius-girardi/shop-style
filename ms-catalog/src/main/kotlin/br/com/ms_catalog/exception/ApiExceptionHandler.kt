@@ -17,7 +17,7 @@ class ApiExceptionHandler {
 
     @ExceptionHandler(DatabaseException::class)
     fun handleDatabaseException(ex: DatabaseException):ResponseEntity<MessageResponse>{
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(MessageResponse(ex.message!!))
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(MessageResponse(ex.message))
     }
 
 }

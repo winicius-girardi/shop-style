@@ -210,3 +210,42 @@ const val RESPONSE_ALL_PRODUCTS=
             }
         ]
     """
+
+const val VALID_PRODUCT_CHANGE =
+    """
+        {
+            "name":"vasco",
+            "material":"teste",
+            "brand": "teste",
+            "description": "teste"
+        }
+    """
+const val INVALID_PRODUCT_CHANGE=
+    """
+        {
+            "name":"",
+            "material":"",
+            "brand": "",
+            "description": ""
+        }
+    """
+const val  RESPONSE_INVALID_PRODUCT_CHANGE=
+    """
+        [
+            {
+                "fieldName":"FIELDS",
+                "message":"At least one field must be filled"
+            }
+        ]
+    """
+const val RESPONSE_PRODUCT=
+    """
+        {
+            "id":1,
+            "name":"Calça Jeans",
+            "description":"Calça jeans azul",
+            "brand":"Levis",
+            "material":"Jeans",
+            "categoryId":2
+        }
+    """
