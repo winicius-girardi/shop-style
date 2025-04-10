@@ -19,7 +19,7 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<MessageResponse> databaseException(DatabaseException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getDetails());
     }
 
 }

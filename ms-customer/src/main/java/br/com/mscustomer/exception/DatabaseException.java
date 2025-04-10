@@ -8,5 +8,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class DatabaseException extends RuntimeException {
-    private MessageResponse message;
+    private MessageResponse details;
 }
