@@ -80,3 +80,42 @@ CREATE TABLE IF NOT EXISTS MS_CATALOG_SCH.MEDIA(
 );
 
 -- TEST DATA
+INSERT INTO MS_CUSTOMER_SCH.CUSTOMER (
+    CPF,
+    FIRST_NAME,
+    LAST_NAME,
+    SEX,
+    BIRTHDATE,
+    EMAIL,
+    PASSWORD,
+    ACTIVE
+) VALUES (
+             '12345678901',
+             'João',
+             'Silva',
+             'M',
+             '1990-05-15',
+             'joao.silva@email.com',
+             'senha123',
+             true
+         );
+
+INSERT INTO MS_CUSTOMER_SCH.ADDRESS (
+    STATE,
+    CITY,
+    DISTRICT,
+    STREET,
+    NUMBER,
+    CEP,
+    COMPLEMENT,
+    CUSTOMER_ID
+) VALUES (
+             10,
+             'São Paulo',
+             'Centro',
+             'Av. Paulista',
+             '1000',
+             '01311000',
+             'Apto 101',
+             1
+         );
