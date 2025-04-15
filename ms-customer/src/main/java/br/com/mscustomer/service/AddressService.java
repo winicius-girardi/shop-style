@@ -64,11 +64,11 @@ public class AddressService {
 
         addressRepository.save(existingAddress);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     public ResponseEntity<Void> deleteAddress(final Long id) {
         addressRepository.deleteById(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

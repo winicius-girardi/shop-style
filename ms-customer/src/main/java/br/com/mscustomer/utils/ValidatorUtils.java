@@ -28,7 +28,7 @@ public class ValidatorUtils{
         if(!customer.email().matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$"))
             errors.add(createErrorField("EMAIL","EMAIL DEVE TER FORMATO VÁLIDO"));
 
-        if(!isValidPassword(customer.password()))
+        if(isValidPassword(customer.password()))
             errors.add(createErrorField("PASSWORD","SENHA DEVE TER PELO MENOS 6 CARACTERES VÁLIDOS."));
 
         if(!customer.birthdate().matches("^\\d{4}-\\d{2}-\\d{2}$"))
@@ -55,7 +55,7 @@ public class ValidatorUtils{
         if(address.state().isBlank())
             errors.add(createErrorField("STATE","ESTADO PRECISA SER INFOMARDO"));
 
-        if(!isValidNumber(address.number()))
+        if(isValidNumber(address.number()))
             errors.add(createErrorField("NUMBER","CAMPO NUMERO SÓ PODE CONTER NUMEROS"));
 
         if(address.customerId().describeConstable().isEmpty())
